@@ -14,28 +14,30 @@
 						<span>xxx</span>
 					{{/if}}
 					{{each items as item}}
-						<{{item}}>
+						<{{=item}}>
 					{{/each}}
 					x
 					</div>
 				{{else if a === 2}}
 					(a is 2)
-					x{{c}}x
+					x{{c | x: 'YYYY-MM-dd' | y | z}}x
 				{{/if}}
 				dasdas
 			`;
 
+			v.filter('z', function( str ) {
+				return str.toUpperCase();
+			})
+
 			console.log( 'templateStr' );
 			console.log( templateStr );
 
-			var render = compile( templateStr );
-
-			console.log( 'render' );
-			console.log( render + '' );
+			var render = v.compile( templateStr );
 
 			var rendered = render({
-				a: 1,
-				items: [6,7,8]
+				a: 2,
+				c: 'abc',
+				items: [6,7,'<a href="javascript:;">link</a>']
 			});
 
 			console.log( 'rendered' );

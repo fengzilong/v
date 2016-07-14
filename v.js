@@ -1,3 +1,21 @@
+let _filters = {};
+
+const filter = function( name, fn ) {
+	if( typeof fn === 'function' ) {
+		_filters[ name ] = fn;
+	}
+};
+
+const applyFilter = function( name, str, ...args ) {
+	let f = _filters[ name ];
+
+	if( !f ) {
+		return str;
+	}
+
+	return f( str, ...args );
+};
+
 const escapeMap = {
 	"<": "&#60;",
 	">": "&#62;",
@@ -16,11 +34,16 @@ const escape = function( content ) {
 const OPEN_TAG = '{{';
 const CLOSE_TAG = '}}';
 
+const util = {
+	escape: escape,
+	filter: applyFilter
+}
+
 const compile = function( template ) {
 	let output = [];
 	let counter = 1;
 
-	let pieces = template.replace(/(\n|\r|\t)/g, '').split(/({{|}})/);
+	let pieces = template.replace(/\s+/g, ' ').split(/({{|}})/);
 
 	let html = [];
 	let code = [];
@@ -68,7 +91,7 @@ const compile = function( template ) {
 			// 从末尾开始向前查找，查找到当前元素的下一个为止
 			for( let j = code.length - 1; j > i; j-- ) {
 				if( !code[ j ].binded && new RegExp( '^/' + first ).test( code[ j ].content ) ) {
-					// 锁定当前/xxx为已绑定状态
+					// lock current bind status as binded
 					code[ j ].binded = true;
 					v.bind = code[ j ].position;
 					break;
@@ -97,44 +120,24 @@ const compile = function( template ) {
 		}
 	});
 
-	output.push( 'var $o = "";' );
-
 	const makeExprWithData = function( expr, suffix ) {
-		// 错误抑制
+		// throw `x is undefined` error
 		return `
 			${ suffix ? 'var $e' + suffix + ';': '' }
 			with( $data ) {
-				if( typeof ${expr} === 'undefined' ) {
-					$e${suffix || ''} = '';
-				} else {
-					$e${suffix || ''} = ( ${expr} );
-				}
-			}
-		`;
-	};
-
-	const makeEachExprWithData = function( expr, suffix ) {
-		// 错误抑制
-		return `
-			${ suffix ? 'var $e' + suffix + ';': '' }
-			with( $data ) {
-				if( typeof ${expr} === 'undefined' ) {
-					$e${suffix || ''} = [];
-				} else {
-					$e${suffix || ''} = ( ${expr} );
-				}
+				$e${suffix || ''} = ${expr};
 			}
 		`;
 	};
 
 	const parseEach = expr => {
-		let tmp = expr.split( ' as ' );
-		if( tmp.length === 2 ) {
-			let tmp2 = tmp[ 1 ].split( ',' );
-			let i = tmp2[ 1 ] || '$i';
-			let v = tmp2[ 0 ] || '$v';
+		let parts = expr.split( ' as ' );
+		if( parts.length === 2 ) {
+			let tmp = parts[ 1 ].split( ',' );
+			let i = tmp[ 1 ] || '$i';
+			let v = tmp[ 0 ] || '$v';
 			return {
-				items: tmp[ 0 ],
+				items: parts[ 0 ],
 				v: v,
 				i: i
 			};
@@ -145,18 +148,20 @@ const compile = function( template ) {
 		return `var ${i} = 0, len = ${items}.length; ${i} < len; ${i}++`;
 	}
 
+	output.push( 'var $o = "";' );
+	output.push( 'var $util = this;' );
+	output.push( 'var $escape = $util.escape;' );
+	output.push( 'var $filter = $util.filter;' );
+
 	all.forEach(v => {
 		if( v.type === 'html' ) {
-			// TODO: shall escape
-			// = not escape
-			output.push( '$o += "' + escape( v.content ) + '";' );
+			output.push( '$o += "' + v.content + '";' );
 		} else if( v.type === 'code' ) {
-			let parts = v.content.split( ' ' );
-			let rest = parts.splice( 1 );
+			let content = v.content.trim();
+			let parts = content.split( ' ' );
 			let first = parts[ 0 ];
-			let matched;
+			let rest = parts.slice( 1 );
 
-			// TODO: support else if
 			if( first === 'if' ) {
 				v.declare = [];
 				v.declare.push( makeExprWithData( rest.join( ' ' ), counter ) );
@@ -164,8 +169,9 @@ const compile = function( template ) {
 				output.push( `if( $e${counter} ) {` );
 				counter++;
 			} else if( first === 'else' ) {
+				let matched;
 				if( rest[ 0 ] === 'if' ) {
-					// 将makeExpr挪到if开始的地方
+					// move declaration to the top of matched `if`
 					all.forEach(function( v2 ) {
 						if( v2.position === v.refer.belong ) {
 							matched = v2;
@@ -187,23 +193,44 @@ const compile = function( template ) {
 				// 	i: i
 				// }
 				let parsed = parseEach( rest.join( ' ' ) );
-				output.push( makeEachExprWithData( parsed.items, counter ) );
-				// TODO: 统一遍历方法，支持数组和对象
+				output.push( makeExprWithData( parsed.items, counter ) );
+				// TODO: support array and object with each
 				output.push( 'for( ' + joinEachExpr( `$e${counter}`, parsed.i ) + ' ) {' );
 				output.push( `${parsed.v} = $e${counter}[$i];` );
 				counter++;
 			} else if( first === '/if' || first === '/each' ) {
 				output.push( '}' );
 			} else {
-				output.push( makeExprWithData( v.content, counter ) );
-				output.push( `$o += $e${counter} || '';` );
-				counter++;
+				let parts = content.split( '|' );
+				let expr = parts[ 0 ];
+				let filters = parts.slice( 1 );
+
+				if( expr[ 0 ] !== '=' ) {
+					output.push( makeExprWithData( expr, counter ) );
+
+					expr = `$e${counter}`;
+					for( let i = 0, len = filters.length; i < len; i++ ) {
+						let nameAndArgs = filters[ i ].split( ':' );
+						let name = nameAndArgs[ 0 ].trim();
+						let args = nameAndArgs.slice( 1 ).join( '' );
+						expr = `$filter( ${JSON.stringify(name)}, ${expr} ${args ? ',' + args : ''} )`;
+					}
+					// TODO: act according to escape option
+					output.push( `$o += $escape(${expr});` );
+					counter++;
+				} else {
+					// no escape
+					output.push( makeExprWithData( expr.slice( 1 ), counter ) );
+					output.push( `$o += $e${counter};` );
+					counter++;
+				}
 			}
 		}
 	});
 
 	output.push( 'return $o;' );
 
+	// extract declaration out
 	output = output.map(function( v ) {
 		if( !Array.isArray( v ) ) {
 			return v;
@@ -212,5 +239,11 @@ const compile = function( template ) {
 		}
 	});
 
-	return new Function('$data', output.join('\n'));
+	return new Function('$data', output.join('\n')).bind( util );
 }
+
+const v = {};
+
+v.version = '0.0.1';
+v.compile = compile;
+v.filter = filter;
