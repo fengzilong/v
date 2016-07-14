@@ -1,0 +1,47 @@
+<html>
+	<head></head>
+	<body>
+		<div id="app"></div>
+		<script type="text/javascript" src="./v.js"></script>
+		<script type="text/javascript">
+			var templateStr = `
+				dsadsadsa
+				{{if a === 1}}
+					(a is 1)
+					<div>
+					x
+					{{if true}}
+						<span>xxx</span>
+					{{/if}}
+					{{each items as item}}
+						<{{item}}>
+					{{/each}}
+					x
+					</div>
+				{{else if a === 2}}
+					(a is 2)
+					x{{c}}x
+				{{/if}}
+				dasdas
+			`;
+
+			console.log( 'templateStr' );
+			console.log( templateStr );
+
+			var render = compile( templateStr );
+
+			console.log( 'render' );
+			console.log( render + '' );
+
+			var rendered = render({
+				a: 1,
+				items: [6,7,8]
+			});
+
+			console.log( 'rendered' );
+			console.log( rendered );
+
+			app.innerHTML = rendered;
+		</script>
+	</body>
+</html>

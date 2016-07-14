@@ -1,0 +1,35 @@
+{
+  "name": "v",
+  "version": "0.0.0",
+  "description": "a tiny template engine",
+  "license": "MIT",
+  "repository": "fengzilong/v",
+  "author": {
+    "name": "mo",
+    "email": "feng_zilong@163.com",
+    "url": "github.com/fengzilong/v"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && mocha"
+  },
+  "files": [
+    "v.js"
+  ],
+  "keywords": [
+    ""
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "xo": "^0.7.1"
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "mocha"
+    ]
+  }
+}
