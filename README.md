@@ -4,7 +4,9 @@
 
 ## Install
 
-not published yet
+```bash
+$ npm i vtpl
+```
 
 ## API
 
