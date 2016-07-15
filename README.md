@@ -2,30 +2,43 @@
 
 > :rabbit: a tiny template engine
 
-work in progress
-
 ## Install
 
 not published yet
 
-## Usage
-
-```js
-var v = require('v');
-
-v('template here')({
-	data: 'here'
-});
-```
-
-
 ## API
 
-### v(input)
+### v.compile( template )
 
-#### input
+#### template
 
 Type: `string`
+
+### v.registerFilter( name, fn )
+
+#### name
+
+Type: `string`
+
+#### fn
+
+Type: `function`
+
+### v.config( key, value )
+
+#### key
+
+Type: `string`
+
+#### value
+
+Type: `string` or `boolean`
+
+key | value
+------- | -----------
+openTag | string
+closeTag | string
+escape | boolean
 
 
 ## License

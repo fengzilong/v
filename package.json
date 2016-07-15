@@ -1,5 +1,5 @@
 {
-  "name": "v",
+  "name": "vtpl",
   "main": "v.js",
   "version": "0.0.0",
   "description": "a tiny template engine",
