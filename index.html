@@ -1,47 +1,64 @@
 <html>
-	<head></head>
+	<head>
+		<title>v - a tiny template engine</title>
+	</head>
 	<body>
 		<div id="app"></div>
-		<script type="text/javascript" src="./v.js"></script>
+
+		<script type="text/javascript" src="./dist/v.js"></script>
 		<script type="text/javascript">
 			var templateStr = `
-				dsadsadsa
-				{{if a === 1}}
-					(a is 1)
-					<div>
-					x
-					{{if true}}
-						<span>xxx</span>
-					{{/if}}
-					{{each items as item}}
-						<{{=item}}>
-					{{/each}}
-					x
-					</div>
-				{{else if a === 2}}
-					(a is 2)
-					x{{c | x: 'YYYY-MM-dd' | y | z}}x
+				{{ Date.now() }}
+
+				<br />
+				
+				{{if num === 0}}
+					0
+				{{else if num > 0 }}
+					positive
+				{{else if num < 0}}
+					negative
 				{{/if}}
-				dasdas
+
+				<br />
+
+				escaped: {{ test }}
+
+				<br />
+
+				{{each list1 as v, k}}
+					{{ v | append: '@appended' }}
+					<br />
+				{{/each}}
+
+				-----
+
+				<br />
+
+				{{each list2 as v, k}}
+					{{ k }}:{{ v }}
+					<br />
+				{{/each}}
 			`;
 
-			v.filter('z', function( str ) {
-				return str.toUpperCase();
-			})
+			v.registerFilter('append', function( str, append ) {
+				return str + ( append + '' );
+			});
 
-			console.log( 'templateStr' );
-			console.log( templateStr );
+			// v.config( `escape`, false );
 
 			var render = v.compile( templateStr );
 
 			var rendered = render({
-				a: 2,
-				c: 'abc',
-				items: [6,7,'<a href="javascript:;">link</a>']
+				num: 1,
+				test: `<span style="color: red;">test</span>`,
+				list1: [ 6, 7, 8 ],
+				list2: {
+					a: 1,
+					b: 2,
+					c: 3
+				}
 			});
-
-			console.log( 'rendered' );
-			console.log( rendered );
 
 			app.innerHTML = rendered;
 		</script>
