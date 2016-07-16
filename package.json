@@ -1,12 +1,12 @@
 {
   "name": "vtpl",
-  "main": "v.js",
+  "main": "dist/v.js",
   "version": "0.0.0",
   "description": "a tiny template engine",
   "license": "MIT",
   "repository": "fengzilong/v",
   "author": {
-    "name": "mo",
+    "name": "fengzilong",
     "email": "feng_zilong@163.com",
     "url": "github.com/fengzilong/v"
   },
