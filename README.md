@@ -43,6 +43,33 @@ closeTag | string
 escape | boolean
 
 
+## Template Syntax
+
+- if / else
+
+```html
+{{if expr1}}
+	expr1 is true
+{{else if expr2}}
+	expr2 is true
+{{else}}
+	expr1 and expr2 are both false
+{{/if}}
+```
+
+- each
+
+```html
+{{each arrayOrObject as v, k}}
+	{{ v + 'tail' }}
+{{/each}}
+```
+
+- filter
+
+{{ v | filter1: param1, param2 | filter2 | ... }}
+
+
 ## License
 
 MIT © [fengzilong](https://github.com/fengzilong/v)

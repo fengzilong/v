@@ -3,7 +3,7 @@ import compile from './lib/compile';
 import config from './lib/config';
 
 export default {
-	config: config,
+	config,
 	compile,
 	registerFilter,
 	version: '0.0.0'
