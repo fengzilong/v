@@ -1,7 +1,7 @@
 {
   "name": "vtpl",
   "main": "dist/v.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "a tiny template engine",
   "license": "MIT",
   "repository": "fengzilong/v",
@@ -22,7 +22,11 @@
     "v.js"
   ],
   "keywords": [
-    "template", "engine", "tiny", "v", "vtpl"
+    "template",
+    "engine",
+    "tiny",
+    "v",
+    "vtpl"
   ],
   "dependencies": {
     "es6-promise": "^3.2.1",
