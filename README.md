@@ -51,7 +51,7 @@ For example
 {{= expr}}
 ```
 
-You can also disable this feature in global scope, by adding following code before compiling your code
+You can also disable this feature in global scope, by adding following code before compiling your template
 
 ```js
 v.config( 'escape', false );
