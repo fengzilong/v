@@ -22,7 +22,7 @@
     "v.js"
   ],
   "keywords": [
-    ""
+    "template", "engine", "tiny", "v", "vtpl"
   ],
   "dependencies": {
     "es6-promise": "^3.2.1",
