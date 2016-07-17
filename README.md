@@ -1,11 +1,78 @@
-# v [![stability][0]][1]
+# v [![size][size-image]][size-url] [![npm package][npm-package-image]][npm-package-url]
 
 > :rabbit: a tiny template engine
 
-## Install
+## Installation
 
 ```bash
 $ npm i vtpl
+```
+
+## Template Syntax
+
+### if / else
+
+```js
+{{if expr1}}
+	expr1 is true
+{{else if expr2}}
+	expr1 is false and expr2 is true
+{{else}}
+	expr1 and expr2 are both false
+{{/if}}
+```
+
+### each
+
+```html
+{{each arrayOrObject as v, k}}
+	{{ v }}
+{{/each}}
+```
+
+### interpolation
+
+```js
+{{ v }}
+{{ v + 'tail' }}
+{{ a || b }}
+{{ a && b }}
+{{ Date.now() }}
+{{ Math.round( num ) }}
+{{ boolean ? a : b }}
+...
+```
+
+All interpolation will be escaped automatically by default, if you don't want to behave like that, add `=` at the start of interpolation
+
+For example
+
+```js
+{{= expr}}
+```
+
+You can also disable this feature in global scope, by adding following code before compiling your code
+
+```js
+v.config( 'escape', false );
+```
+
+
+### filter
+
+```js
+{{ expr | filter1: param1, param2 | filter2 | ... }}
+```
+
+If you want to register your own filter, use `v.registerFilter`
+
+Here is an example
+for filter1 above
+
+```js
+v.registerFilter( 'filter1', function( str, param1, param2 ) {
+	return str + param1 + param2;
+} );
 ```
 
 ## API
@@ -42,37 +109,12 @@ openTag | string
 closeTag | string
 escape | boolean
 
-
-## Template Syntax
-
-- if / else
-
-```html
-{{if expr1}}
-	expr1 is true
-{{else if expr2}}
-	expr2 is true
-{{else}}
-	expr1 and expr2 are both false
-{{/if}}
-```
-
-- each
-
-```html
-{{each arrayOrObject as v, k}}
-	{{ v + 'tail' }}
-{{/each}}
-```
-
-- filter
-
-{{ v | filter1: param1, param2 | filter2 | ... }}
-
-
 ## License
 
 MIT © [fengzilong](https://github.com/fengzilong/v)
 
-[0]: https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square
-[1]: https://nodejs.org/api/documentation.html#documentation_stability_index
+[size-image]: https://img.shields.io/badge/size-3.57KB-brightgreen.svg?style=flat-square
+[size-url]: https://github.com/fengzilong/v/tree/master/dist/v.js
+
+[npm-package-image]: https://img.shields.io/npm/v/vtpl.svg?style=flat-square
+[npm-package-url]: https://www.npmjs.org/package/vtpl

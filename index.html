@@ -12,11 +12,11 @@
 
 				<br />
 
-				{{if num === 0}}
+				{{		if num === 0 }}
 					0
-				{{else if num > 0 }}
+				{{ 	else if num > 0 }}
 					positive
-				{{else if num < 0}}
+				{{	 else if num < 0 }}
 					negative
 				{{/if}}
 
@@ -27,7 +27,7 @@
 				<br />
 
 				{{each list1 as v, k}}
-					{{ v | append: '@appended' }}
+					{{ v + 'm' | append: '@appended' }}
 					<br />
 				{{/each}}
 
