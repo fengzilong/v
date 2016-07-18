@@ -43,7 +43,7 @@ $ npm i vtpl
 ...
 ```
 
-All interpolations will be escaped automatically by default, if you don't want to behave like that, add `=` at the start of interpolation
+All interpolations will be escaped automatically by default, if you want to disable this feature, add `=` at the start of your interpolation
 
 For example
 
@@ -65,8 +65,7 @@ v.config( 'escape', false );
 
 If you want to register your own filter, use `v.registerFilter`
 
-Here is an example
-for filter1 above
+Here is an example for filter1 above
 
 ```js
 v.registerFilter( 'filter1', function( str, param1, param2 ) {
