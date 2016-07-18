@@ -43,7 +43,7 @@ $ npm i vtpl
 ...
 ```
 
-All interpolation will be escaped automatically by default, if you don't want to behave like that, add `=` at the start of interpolation
+All interpolations will be escaped automatically by default, if you don't want to behave like that, add `=` at the start of interpolation
 
 For example
 
@@ -56,7 +56,6 @@ You can also disable this feature in global scope, by adding following code befo
 ```js
 v.config( 'escape', false );
 ```
-
 
 ### filter
 
