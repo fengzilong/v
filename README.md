@@ -111,7 +111,7 @@ escape | boolean
 
 MIT © [fengzilong](https://github.com/fengzilong/v)
 
-[size-image]: https://img.shields.io/badge/size-3.58KB-brightgreen.svg?style=flat-square
+[size-image]: https://img.shields.io/badge/size-3.60KB-brightgreen.svg?style=flat-square
 [size-url]: https://github.com/fengzilong/v/tree/master/dist/v.js
 
 [npm-package-image]: https://img.shields.io/npm/v/vtpl.svg?style=flat-square
