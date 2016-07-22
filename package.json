@@ -19,7 +19,7 @@
     "dist": "rollup -c"
   },
   "files": [
-    "v.js"
+    "dist/v.js"
   ],
   "keywords": [
     "template",
