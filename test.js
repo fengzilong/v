@@ -21,6 +21,28 @@ test.before(() => {
 	});
 });
 
+const defaultOpenTag = v.config( 'openTag' );
+const defaultCloseTag = v.config( 'closeTag' );
+const defaultEscape = v.config( 'escape' );
+
+test.beforeEach(() => {
+	v.config( 'openTag', defaultOpenTag );
+	v.config( 'closeTag', defaultCloseTag );
+	v.config( 'escape', defaultEscape );
+});
+
+test(`defaultOpenTag is {{`, t => {
+	t.is( defaultOpenTag, '{{' );
+});
+
+test(`defaultCloseTag is }}`, t => {
+	t.is( defaultCloseTag, '}}' );
+});
+
+test(`defaultEscape is true`, t => {
+	t.is( defaultEscape, true );
+});
+
 test(`v`, t => {
 	const o = v.compile( '{{ v }}' )({
 		v: 123
@@ -86,6 +108,38 @@ test(`a / b`, t => {
 		b: 3
 	});
 	t.is( o, '2' );
+});
+
+test(`escape`, t => {
+	const o = v.compile( '{{ v }}' )({
+		v: '<span>text</span>'
+	});
+	t.is( o, '&#60;span&#62;text&#60;/span&#62;' );
+});
+
+test(`no escape`, t => {
+	const o = v.compile( '{{= v }}' )({
+		v: '<span>text</span>'
+	});
+	t.is( o, '<span>text</span>' );
+});
+
+test(`no escape globally`, t => {
+	v.config( 'escape', false );
+	const o = v.compile( '{{ v }}' )({
+		v: '<span>text</span>'
+	});
+	t.is( o, '<span>text</span>' );
+});
+
+test(`custom openTag and closeTag`, t => {
+	v.config( 'openTag', '{' );
+	v.config( 'closeTag', '}' );
+	const o = v.compile( '{if true}{ v1 }{else}{ v2 }{/if}' )({
+		v1: 'v1',
+		v2: 'v2'
+	});
+	t.is( o, 'v1' );
 });
 
 test(`if`, t => {
