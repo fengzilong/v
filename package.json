@@ -1,7 +1,7 @@
 {
   "name": "vtpl",
   "main": "dist/v.js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "a tiny template engine",
   "license": "MIT",
   "repository": "fengzilong/v",
