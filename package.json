@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "xo && mocha",
+    "test": "ava",
     "dev": "nodemon -x \"npm run dist\" --watch lib --watch index.js",
     "dist": "rollup -c"
   },
@@ -30,17 +30,10 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "ava": "^0.15.2",
     "babel-preset-es2015-rollup": "^1.1.1",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-commonjs": "^3.1.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "mocha": "^2.2.5",
-    "xo": "^0.7.1"
-  },
-  "xo": {
-    "envs": [
-      "node",
-      "mocha"
-    ]
+    "rollup-plugin-uglify": "^1.0.1"
   }
 }
