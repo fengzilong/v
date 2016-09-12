@@ -1,6 +1,6 @@
 # v [![build status][build-status-image]][build-status-url] [![size][size-image]][size-url] [![npm package][npm-package-image]][npm-package-url]
 
-> :rabbit: a tiny template engine
+> a tiny template engine
 
 ## Installation
 
@@ -114,7 +114,7 @@ MIT © [fengzilong](https://github.com/fengzilong/v)
 [build-status-image]: https://img.shields.io/circleci/project/fengzilong/v/master.svg?style=flat-square
 [build-status-url]: https://circleci.com/gh/fengzilong/v
 
-[size-image]: https://img.shields.io/badge/size-3.60KB-brightgreen.svg?style=flat-square
+[size-image]: https://img.shields.io/badge/size-3.25KB-brightgreen.svg?style=flat-square
 [size-url]: https://github.com/fengzilong/v/tree/master/dist/v.js
 
 [npm-package-image]: https://img.shields.io/npm/v/vtpl.svg?style=flat-square
