@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import buble from 'rollup-plugin-buble';
 import commonjs from 'rollup-plugin-commonjs';
 import uglify from 'rollup-plugin-uglify';
 
@@ -7,12 +7,9 @@ export default {
 	entry: './index.js',
 	format: 'umd',
 	dest: 'dist/v.js',
-	// sourceMap: true,
 	plugins: [
 		commonjs(),
-		babel({
-			exclude: 'node_modules/**'
-		}),
+		buble(),
 		uglify(),
 	]
 };
