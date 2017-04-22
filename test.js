@@ -1,6 +1,6 @@
 'use strict';
 const test = require('ava');
-const v = require( './' );
+const v = require( './dist/v' );
 
 test.before(() => {
 	v.registerFilter('append', ( str, p ) => {

@@ -10,12 +10,12 @@ export default template => {
 	const CLOSE_TAG = config( 'closeTag' );
 	const ESCAPE = config( 'escape' );
 
-	let pieces = template
+	const pieces = template
 		.replace( /\s+/g, ' ' )
 		.split( new RegExp( `(${OPEN_TAG}|${CLOSE_TAG})`, 'g' ) );
 
-	let code = [];
-	let all = [];
+	const code = [];
+	const all = [];
 	let counter = 1;
 
 	let logic = false;

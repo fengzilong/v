@@ -7,7 +7,7 @@ export default ( items, fn ) => {
 		}
 	// TODO: isPlainObject
 	} else if( typeof items === 'object' ) {
-		for( let i in items ) {
+		for( const i in items ) {
 			if( hasOwn.call( items, i ) ) {
 				fn( items[ i ], i, items );
 			}

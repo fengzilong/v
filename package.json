@@ -14,7 +14,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "ava",
+    "test": "npm run dist && ava",
     "dev": "nodemon -x \"npm run dist\" --watch src",
     "dist": "rollup -c"
   },
