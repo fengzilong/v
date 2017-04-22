@@ -4,12 +4,8 @@ import uglify from 'rollup-plugin-uglify';
 
 export default {
 	moduleName: 'v',
-	entry: './index.js',
+	entry: './src/index.js',
 	format: 'umd',
 	dest: 'dist/v.js',
-	plugins: [
-		commonjs(),
-		buble(),
-		uglify(),
-	]
+	plugins: [ commonjs(), buble(), uglify() ],
 };

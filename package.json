@@ -7,7 +7,7 @@
   "repository": "fengzilong/v",
   "author": {
     "name": "fengzilong",
-    "email": "feng_zilong@163.com",
+    "email": "fengzilong1992@163.com",
     "url": "github.com/fengzilong/v"
   },
   "engines": {
@@ -15,11 +15,11 @@
   },
   "scripts": {
     "test": "ava",
-    "dev": "nodemon -x \"npm run dist\" --watch lib --watch index.js",
+    "dev": "nodemon -x \"npm run dist\" --watch src",
     "dist": "rollup -c"
   },
   "files": [
-    "dist/v.js"
+    "dist"
   ],
   "keywords": [
     "template",
@@ -31,6 +31,8 @@
   "dependencies": {},
   "devDependencies": {
     "ava": "^0.15.2",
+    "nodemon": "^1.11.0",
+    "rollup": "^0.41.6",
     "rollup-plugin-buble": "^0.13.0",
     "rollup-plugin-commonjs": "^3.1.0",
     "rollup-plugin-uglify": "^1.0.1"
