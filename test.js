@@ -226,3 +226,11 @@ test(`filters`, t => {
 
 	t.is( o, 'Hello World' );
 });
+
+test(`preserve whitespace`, t => {
+	const o = v.compile(`hello\nfriend, {{ data }}!!!`)({
+		data: 'world'
+	});
+
+	t.is( o, `hello\nfriend, world!!!` );
+})
