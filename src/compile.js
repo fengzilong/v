@@ -11,7 +11,6 @@ export default template => {
 	const ESCAPE = config( 'escape' );
 
 	const pieces = template
-		.replace( /\s+/g, ' ' )
 		.split( new RegExp( `(${OPEN_TAG}|${CLOSE_TAG})`, 'g' ) );
 
 	const code = [];
