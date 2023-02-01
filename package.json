@@ -1,22 +1,28 @@
 {
   "name": "vtpl",
-  "main": "dist/v.js",
   "version": "0.0.7",
   "description": "a tiny template engine",
   "license": "MIT",
+  "type": "module",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "repository": "fengzilong/v",
   "author": {
     "name": "fengzilong",
     "email": "fengzilong1992@163.com",
-    "url": "github.com/fengzilong/v"
-  },
-  "engines": {
-    "node": ">=0.10.0"
+    "url": "https://github.com/fengzilong"
   },
   "scripts": {
-    "test": "npm run dist && ava",
-    "dev": "nodemon -x \"npm run dist\" --watch src",
-    "dist": "rollup -c"
+    "test": "npm run build && ava --serial",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "dist"
@@ -28,13 +34,9 @@
     "v",
     "vtpl"
   ],
-  "dependencies": {},
   "devDependencies": {
-    "ava": "^0.15.2",
+    "ava": "^5.1.1",
     "nodemon": "^1.11.0",
-    "rollup": "^0.41.6",
-    "rollup-plugin-buble": "^0.13.0",
-    "rollup-plugin-commonjs": "^3.1.0",
-    "rollup-plugin-uglify": "^1.0.1"
+    "tsup": "^6.5.0"
   }
 }

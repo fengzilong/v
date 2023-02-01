@@ -1,6 +1,6 @@
 'use strict';
-const test = require('ava');
-const v = require( './dist/v' );
+import test from 'ava'
+import v from './dist/index.js'
 
 test.before(() => {
 	v.registerFilter('append', ( str, p ) => {
