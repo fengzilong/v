@@ -1,6 +1,6 @@
 {
   "name": "vtpl",
-  "version": "0.0.7",
+  "version": "1.1.0",
   "description": "a tiny template engine",
   "license": "MIT",
   "type": "module",
