@@ -5,10 +5,10 @@ import config from './config';
 
 const util = { escape, filter, each };
 
-export default template => {
-	const OPEN_TAG = config( 'openTag' );
-	const CLOSE_TAG = config( 'closeTag' );
-	const ESCAPE = config( 'escape' );
+export default (template, userConfig) => {
+	const OPEN_TAG = userConfig?.openTag ?? config( 'openTag' );
+	const CLOSE_TAG = userConfig?.closeTag ?? config( 'closeTag' );
+	const ESCAPE = userConfig?.escape ?? config( 'escape' );
 
 	const pieces = template
 		.split( new RegExp( `(${OPEN_TAG}|${CLOSE_TAG})`, 'g' ) );

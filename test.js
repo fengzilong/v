@@ -132,10 +132,30 @@ test(`no escape globally`, t => {
 	t.is( o, '<span>text</span>' );
 });
 
+test(`no escape locally`, t => {
+	const o = v.compile( '{{ v }}', {
+		escape: false
+	} )({
+		v: '<span>text</span>'
+	});
+	t.is( o, '<span>text</span>' );
+});
+
 test(`custom openTag and closeTag`, t => {
 	v.config( 'openTag', '{' );
 	v.config( 'closeTag', '}' );
 	const o = v.compile( '{if true}{ v1 }{else}{ v2 }{/if}' )({
+		v1: 'v1',
+		v2: 'v2'
+	});
+	t.is( o, 'v1' );
+});
+
+test(`custom openTag and closeTag locally`, t => {
+	const o = v.compile( '{if true}{ v1 }{else}{ v2 }{/if}', {
+		openTag: '{',
+		closeTag: '}'
+	} )({
 		v1: 'v1',
 		v2: 'v2'
 	});
