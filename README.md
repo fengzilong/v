@@ -1,4 +1,4 @@
-# v [![build status][build-status-image]][build-status-url] [![size][size-image]][size-url] [![npm package][npm-package-image]][npm-package-url]
+# v [![npm package][npm-package-image]][npm-package-url] [![size][size-image]][size-url]
 
 > a tiny template engine
 
@@ -75,11 +75,21 @@ v.registerFilter( 'filter1', function( str, param1, param2 ) {
 
 ## API
 
-### v.compile( template )
+### v.compile( template, options )
 
 #### template
 
 Type: `string`
+
+#### options
+
+options here has priority over global config
+
+key | value
+------- | -----------
+openTag | string
+closeTag | string
+escape | boolean
 
 ### v.registerFilter( name, fn )
 
@@ -111,11 +121,8 @@ escape | boolean
 
 MIT © [fengzilong](https://github.com/fengzilong/v)
 
-[build-status-image]: https://img.shields.io/circleci/project/fengzilong/v/master.svg?style=flat-square
-[build-status-url]: https://circleci.com/gh/fengzilong/v
-
-[size-image]: http://img.badgesize.io/https://unpkg.com/vtpl/dist/v.js?compression=gzip&label=gzip&style=flat-square
-[size-url]: https://github.com/fengzilong/v/tree/master/dist/v.js
+[size-image]: https://img.shields.io/bundlephobia/minzip/vtpl?color=%2322ce42&style=flat-square
+[size-url]: https://unpkg.com/browse/vtpl/
 
 [npm-package-image]: https://img.shields.io/npm/v/vtpl.svg?style=flat-square
 [npm-package-url]: https://www.npmjs.org/package/vtpl
